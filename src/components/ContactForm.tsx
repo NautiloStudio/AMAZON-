@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useSyncExternalStore, type FormEvent } from "react";
 import Link from "next/link";
 import { getSupabase } from "@/lib/supabase";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+const subscribeNever = () => () => {};
+
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
+  // False until React has hydrated, so the form can never submit natively.
+  const ready = useSyncExternalStore(subscribeNever, () => true, () => false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,7 +50,7 @@ export default function ContactForm() {
   const label = "mb-2 block text-sm font-medium text-offwhite";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form method="post" onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label htmlFor="name" className={label}>
           Name
@@ -81,7 +85,7 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        disabled={status === "sending"}
+        disabled={!ready || status === "sending"}
         className="w-full rounded-full bg-cyan px-6 py-4 font-display font-semibold text-graphite transition-transform duration-150 ease-out active:scale-[0.98] disabled:opacity-70"
       >
         {status === "sending" ? "Sending..." : "Send message"}
