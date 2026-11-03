@@ -72,14 +72,18 @@ export default function ContactForm() {
       </div>
       <div>
         <label htmlFor="message" className={label}>
-          Message
+          Your challenge
         </label>
+        <p id="message-help" className="mb-2 text-sm text-offwhite/80">
+          For example: shoppers visit but don&rsquo;t buy, or you don&rsquo;t know what to fix first.
+        </p>
         <textarea
           id="message"
           name="message"
           required
           rows={4}
-          placeholder="What do you sell, and what do you want to improve?"
+          aria-describedby="message-help"
+          placeholder="What do you sell, and what would you like to improve?"
           className={field}
         />
       </div>

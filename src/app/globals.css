@@ -77,7 +77,7 @@ textarea {
     @keyframes reveal {
       from {
         opacity: 0;
-        transform: translateY(2.5rem) scale(0.98);
+        transform: translateY(1.25rem);
       }
     }
 
@@ -85,39 +85,6 @@ textarea {
       animation: reveal linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 45%;
-    }
-
-    /* Each word of the statement darkens as it scrolls through the viewport. */
-    @keyframes ink {
-      from {
-        color: var(--color-sand);
-      }
-    }
-
-    .ink-word {
-      animation: ink linear both;
-      animation-timeline: view();
-      animation-range: entry 70% cover 45%;
-    }
-
-    /* The shell turns and grows while the three steps scroll past. */
-    @keyframes grow-shell {
-      from {
-        transform: rotate(-70deg) scale(0.72);
-      }
-      to {
-        transform: rotate(20deg) scale(1.05);
-      }
-    }
-
-    .grow-shell {
-      animation: grow-shell linear both;
-      animation-timeline: --steps;
-      animation-range: cover 10% cover 90%;
-    }
-
-    .steps-timeline {
-      view-timeline-name: --steps;
     }
   }
 }
