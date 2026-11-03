@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { getSupabase } from "@/lib/supabase";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -31,19 +32,29 @@ export default function ContactForm() {
     }
   }
 
+  if (status === "sent") {
+    return (
+      <div role="status" className="self-center rounded-2xl bg-white/5 p-8">
+        <p className="font-display text-2xl font-semibold text-cyan">Thanks, we have your message.</p>
+        <p className="mt-3 text-offwhite/80">We will reply to the email address you gave us.</p>
+      </div>
+    );
+  }
+
   const field =
-    "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-offwhite placeholder:text-offwhite/40 focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/30";
+    "w-full rounded-xl bg-white/8 px-4 py-3.5 text-offwhite ring-1 ring-white/25 transition-shadow duration-150 placeholder:text-offwhite/60 focus:outline-none focus:ring-2 focus:ring-cyan";
+  const label = "mb-2 block text-sm font-medium text-offwhite";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-offwhite/80">
+        <label htmlFor="name" className={label}>
           Name
         </label>
-        <input id="name" name="name" required autoComplete="name" className={field} placeholder="Your name" />
+        <input id="name" name="name" required autoComplete="name" className={field} />
       </div>
       <div>
-        <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-offwhite/80">
+        <label htmlFor="email" className={label}>
           Email
         </label>
         <input
@@ -53,11 +64,10 @@ export default function ContactForm() {
           required
           autoComplete="email"
           className={field}
-          placeholder="you@yourbrand.com"
         />
       </div>
       <div>
-        <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-offwhite/80">
+        <label htmlFor="message" className={label}>
           Message
         </label>
         <textarea
@@ -65,26 +75,28 @@ export default function ContactForm() {
           name="message"
           required
           rows={4}
+          placeholder="What do you sell, and what do you want to improve?"
           className={field}
-          placeholder="Tell us about your Amazon store and what you want to improve."
         />
       </div>
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full rounded-full bg-cyan px-6 py-3.5 font-display font-semibold text-graphite transition hover:bg-apricot disabled:opacity-60"
+        className="w-full rounded-full bg-cyan px-6 py-4 font-display font-semibold text-graphite transition-transform duration-150 ease-out active:scale-[0.98] disabled:opacity-70"
       >
-        {status === "sending" ? "Sending…" : "Send message"}
+        {status === "sending" ? "Sending..." : "Send message"}
       </button>
-      <p aria-live="polite" className="min-h-6 text-sm">
-        {status === "sent" && (
-          <span className="text-cyan">Thanks! We will get back to you soon.</span>
-        )}
-        {status === "error" && (
-          <span className="text-apricot">
-            Something went wrong. Please try again or email us at nautilostd@gmail.com.
-          </span>
-        )}
+      {status === "error" && (
+        <p role="alert" className="text-sm text-apricot">
+          We could not send your message. Try again, or email us at nautilostd@gmail.com.
+        </p>
+      )}
+      <p className="text-sm text-offwhite/75">
+        We only use your details to reply to you. Read our{" "}
+        <Link href="/privacy" className="underline underline-offset-4 hover:text-cyan">
+          privacy note
+        </Link>
+        .
       </p>
     </form>
   );

@@ -10,13 +10,114 @@
   --color-sand: #e3d6cc;
   --font-sans: var(--font-inter);
   --font-display: var(--font-poppins);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  color-scheme: light;
 }
 
 body {
   background: var(--color-offwhite);
   color: var(--color-graphite);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--color-royal);
+  color: var(--color-offwhite);
+}
+
+input,
+textarea {
+  caret-color: var(--color-cyan);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-royal);
+  outline-offset: 3px;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--color-cyan);
+}
+
+/* Motion: everything is visible by default, animation is an enhancement. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+
+  .rise {
+    animation: rise 0.9s var(--ease-out-strong) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  @supports (animation-timeline: view()) {
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(2.5rem) scale(0.98);
+      }
+    }
+
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+
+    /* Each word of the statement darkens as it scrolls through the viewport. */
+    @keyframes ink {
+      from {
+        color: var(--color-sand);
+      }
+    }
+
+    .ink-word {
+      animation: ink linear both;
+      animation-timeline: view();
+      animation-range: entry 70% cover 45%;
+    }
+
+    /* The shell turns and grows while the three steps scroll past. */
+    @keyframes grow-shell {
+      from {
+        transform: rotate(-70deg) scale(0.72);
+      }
+      to {
+        transform: rotate(20deg) scale(1.05);
+      }
+    }
+
+    .grow-shell {
+      animation: grow-shell linear both;
+      animation-timeline: --steps;
+      animation-range: cover 10% cover 90%;
+    }
+
+    .steps-timeline {
+      view-timeline-name: --steps;
+    }
+  }
 }

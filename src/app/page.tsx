@@ -1,193 +1,236 @@
 import Image from "next/image";
+import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
+import ListingCompare from "@/components/ListingCompare";
+import TalkButton from "@/components/TalkButton";
 
 const services = [
   {
     title: "Data analysis",
     text: "Sales, traffic and conversion data turned into clear next steps.",
+    image: "/img/service-data.jpg",
+    alt: "Cardboard parcels stacked in rising columns like a bar chart",
+    tile: "bg-royal",
+    span: "md:col-span-7",
   },
   {
     title: "Listing optimisation",
     text: "Titles, bullets, A+ content and images that convert.",
+    image: "/img/service-listing.jpg",
+    alt: "Bamboo cutting board with a blank paper tag",
+    tile: "bg-apricot",
+    span: "md:col-span-5",
   },
   {
     title: "Ads & SEO",
     text: "Keyword ranking and Sponsored Products campaigns.",
+    image: "/img/service-ads.jpg",
+    alt: "Magnifying glass leaning against a small parcel",
+    tile: "bg-cyan",
+    span: "md:col-span-5",
   },
   {
     title: "AI automation",
     text: "AI agents that handle repetitive listing and reporting tasks.",
+    image: "/img/service-ai.jpg",
+    alt: "White robotic arm placing a parcel at the end of a neat row",
+    tile: "bg-graphite",
+    span: "md:col-span-7",
   },
 ];
 
 const steps = [
-  { word: "Analyse.", text: "We read your sales, traffic and conversion data." },
-  { word: "Optimise.", text: "We fix the listings and ads that hold you back." },
-  { word: "Automate.", text: "AI agents take the repetitive work off your plate." },
+  {
+    word: "Analyse.",
+    text: "We read your sales, traffic and conversion data and turn it into clear next steps.",
+  },
+  {
+    word: "Optimise.",
+    text: "We work on titles, bullets, A+ content and images, then on keywords and Sponsored Products campaigns.",
+  },
+  {
+    word: "Automate.",
+    text: "AI agents take over the repetitive listing and reporting tasks.",
+  },
 ];
 
-function Eyebrow({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
-  return (
-    <p
-      className={`font-display text-sm font-semibold uppercase tracking-[0.2em] ${
-        dark ? "text-cyan" : "text-royal"
-      }`}
-    >
-      {children}
-    </p>
-  );
-}
+const statement = "Too small for the big agencies. Too busy to fix every listing alone.";
 
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 z-20 border-b border-white/10 bg-graphite/90 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <a href="#top" aria-label="Nautilo Studio, home">
+      <header className="on-dark fixed inset-x-0 top-4 z-20 flex justify-center px-4">
+        <nav
+          aria-label="Main"
+          className="flex w-full max-w-3xl items-center justify-between rounded-full bg-graphite/95 py-2 pl-5 pr-2 shadow-[0_12px_40px_-12px_rgba(22,25,31,0.5)] ring-1 ring-white/10 backdrop-blur-md"
+        >
+          <a href="#main" aria-label="Nautilo Studio, back to top">
             <Image
               src="/nautilo-wordmark-light.png"
               alt="Nautilo Studio"
               width={668}
               height={270}
               priority
-              className="h-10 w-auto"
+              className="h-9 w-auto"
             />
           </a>
-          <div className="flex items-center gap-6 text-sm text-offwhite/80">
-            <a href="#services" className="hidden hover:text-cyan sm:inline">
+          <div className="flex items-center gap-6 text-sm text-offwhite/85">
+            <a href="#services" className="hidden py-3 transition-colors hover:text-cyan sm:inline">
               Services
             </a>
-            <a href="#why" className="hidden hover:text-cyan sm:inline">
-              Why us
+            <a href="#how" className="hidden py-3 transition-colors hover:text-cyan sm:inline">
+              How we work
             </a>
-            <a
-              href="#contact"
-              className="rounded-full bg-cyan px-4 py-2 font-display font-semibold text-graphite transition hover:bg-apricot"
-            >
-              Contact us
-            </a>
+            <TalkButton tone="cyan" size="sm" />
           </div>
         </nav>
       </header>
 
-      <main id="top" className="flex-1">
+      <main id="main" className="flex-1 overflow-x-clip">
         {/* Hero */}
-        <section className="bg-graphite text-offwhite">
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 md:grid-cols-[1.3fr_1fr] md:py-28">
-            <div>
-              <Eyebrow dark>Grow chamber by chamber.</Eyebrow>
-              <h1 className="mt-5 font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-                We help Amazon sellers turn more{" "}
-                <span className="text-cyan">visitors into buyers</span>, using data and AI.
-              </h1>
-              <p className="mt-6 max-w-xl text-lg text-offwhite/70">
-                For founder-led Amazon sellers with a good product and traffic, but no
-                marketing or data team.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-4">
-                <a
-                  href="#contact"
-                  className="rounded-full bg-cyan px-7 py-3.5 font-display font-semibold text-graphite transition hover:bg-apricot"
-                >
-                  Talk to us
-                </a>
-                <a
-                  href="#services"
-                  className="rounded-full border border-offwhite/25 px-7 py-3.5 font-display font-semibold transition hover:border-cyan hover:text-cyan"
-                >
-                  See our services
-                </a>
-              </div>
-            </div>
-            <div className="relative mx-auto w-56 sm:w-72 md:w-full md:max-w-sm">
-              <div className="absolute inset-0 rounded-full bg-royal/30 blur-3xl" aria-hidden />
-              <Image
-                src="/nautilo-shell.png"
-                alt=""
-                width={1200}
-                height={1200}
-                priority
-                className="relative h-auto w-full"
-              />
-            </div>
+        <section className="mx-auto max-w-7xl px-4 pt-32 text-center sm:px-6 md:pt-40">
+          <h1
+            className="rise mx-auto max-w-6xl font-display text-[clamp(2.6rem,6.4vw,6rem)] font-bold leading-[1.02] tracking-[-0.04em]"
+            style={{ "--i": 0 } as React.CSSProperties}
+          >
+            More Amazon sales from the traffic you already have.
+          </h1>
+          <p
+            className="rise mx-auto mt-7 max-w-xl text-lg leading-relaxed text-slate sm:text-xl"
+            style={{ "--i": 1 } as React.CSSProperties}
+          >
+            We help founder-led Amazon sellers turn more visitors into buyers, using data and AI.
+          </p>
+          <div
+            className="rise mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-4"
+            style={{ "--i": 2 } as React.CSSProperties}
+          >
+            <TalkButton />
+            <a
+              href="#services"
+              className="font-display font-semibold text-graphite underline decoration-sand decoration-2 underline-offset-8 py-3 transition-colors hover:decoration-royal"
+            >
+              See our services
+            </a>
+          </div>
+
+          <div
+            className="rise relative mx-auto mt-16 max-w-5xl text-left md:mt-20"
+            style={{ "--i": 3 } as React.CSSProperties}
+          >
+            <Image
+              src="/img/nautilus.webp"
+              alt=""
+              width={1024}
+              height={1024}
+              priority
+              sizes="(min-width: 768px) 220px, 120px"
+              className="pointer-events-none absolute -right-2 -top-12 z-10 w-24 rotate-12 md:-right-20 md:-top-20 md:w-48"
+            />
+            <ListingCompare />
           </div>
         </section>
 
-        {/* Niche */}
-        <section id="why" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
-          <Eyebrow>Who we work with</Eyebrow>
-          <div className="mt-5 grid gap-10 md:grid-cols-2">
-            <h2 className="font-display text-3xl font-bold leading-tight sm:text-4xl">
-              Too small for the big agencies. Too busy to analyse every listing alone.
-            </h2>
-            <div className="space-y-5 text-lg text-slate">
-              <p>
-                You already sell on Amazon with a good product. Your listings, ads and daily
-                tasks could convert better, and new customers can be reached through ads.
-              </p>
-              <p className="rounded-2xl border-l-4 border-royal bg-white px-5 py-4 font-display font-semibold text-graphite">
-                Agencies do it for you. Tools leave sellers on their own. We sit in between.
-              </p>
-            </div>
-          </div>
+        {/* Statement */}
+        <section className="mx-auto max-w-6xl px-4 py-28 text-center sm:px-6 md:py-44">
+          <p className="font-display text-[clamp(2.2rem,5.6vw,5.25rem)] font-bold leading-[1.06] tracking-[-0.035em]">
+            {statement.split(" ").map((word, i) => (
+              <span key={i} className="ink-word">
+                {word}{" "}
+              </span>
+            ))}
+          </p>
+          <p className="reveal mx-auto mt-10 max-w-xl text-lg leading-relaxed text-slate sm:text-xl">
+            You already sell a good product on Amazon, but you have no marketing or data team.
+            Agencies do it for you. Tools leave sellers on their own.
+          </p>
         </section>
 
         {/* Services */}
-        <section id="services" className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
-            <Eyebrow>Our services</Eyebrow>
-            <h2 className="mt-5 max-w-2xl font-display text-3xl font-bold leading-tight sm:text-4xl">
-              Four ways we help you convert more
-            </h2>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {services.map((service, i) => (
-                <article
-                  key={service.title}
-                  className="rounded-2xl border border-sand bg-offwhite p-6 transition hover:-translate-y-1 hover:border-royal"
+        <section id="services" className="mx-auto max-w-7xl px-4 sm:px-6">
+          <h2 className="reveal max-w-3xl font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+            Four ways we turn visitors into buyers
+          </h2>
+          <div className="mt-12 grid gap-x-5 gap-y-10 md:grid-cols-12 md:gap-y-14">
+            {services.map((service) => (
+              <article key={service.title} className={`reveal ${service.span}`}>
+                <div
+                  className={`relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-[28rem] ${service.tile}`}
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-royal font-display font-semibold text-offwhite">
-                    {i + 1}
-                  </span>
-                  <h3 className="mt-5 font-display text-lg font-semibold">{service.title}</h3>
-                  <p className="mt-2 text-slate">{service.text}</p>
-                </article>
-              ))}
-            </div>
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    sizes="(min-width: 768px) 60vw, 100vw"
+                    className="object-cover transition-transform duration-700 ease-(--ease-out-strong) [@media(hover:hover)]:hover:scale-[1.03]"
+                  />
+                </div>
+                <h3 className="mt-5 font-display text-xl font-semibold">{service.title}</h3>
+                <p className="mt-1 max-w-md text-lg leading-relaxed text-slate">{service.text}</p>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* Approach */}
-        <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
-          <Eyebrow>How we work</Eyebrow>
-          <div className="mt-10 grid gap-8 md:grid-cols-3">
-            {steps.map((step) => (
-              <div key={step.word}>
-                <p className="font-display text-3xl font-bold text-royal">{step.word}</p>
-                <p className="mt-3 text-lg text-slate">{step.text}</p>
-              </div>
-            ))}
+        {/* How we work */}
+        <section id="how" className="steps-timeline mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44">
+          <div className="grid items-start gap-10 md:grid-cols-2 md:gap-16">
+            <div className="md:sticky md:top-28">
+              <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                Grow chamber by chamber.
+              </h2>
+              <p className="mt-5 max-w-md text-lg leading-relaxed text-slate">
+                A nautilus adds one chamber at a time along the golden spiral. Your store can grow
+                the same way.
+              </p>
+              <Image
+                src="/img/nautilus.webp"
+                alt=""
+                width={1024}
+                height={1024}
+                sizes="(min-width: 768px) 420px, 240px"
+                className="grow-shell mx-auto mt-8 w-56 md:mt-10 md:w-[min(26rem,52vh)]"
+              />
+            </div>
+            <ol className="m-0 list-none space-y-5 p-0 md:pt-[26vh]">
+              {steps.map((step) => (
+                <li
+                  key={step.word}
+                  className="reveal flex min-h-[46vh] flex-col justify-end rounded-[2rem] bg-white p-8 md:p-10"
+                >
+                  <p className="font-display text-[clamp(2.4rem,5vw,4.5rem)] font-bold tracking-[-0.03em] text-royal">
+                    {step.word}
+                  </p>
+                  <p className="mt-3 max-w-md text-lg leading-relaxed text-slate">{step.text}</p>
+                </li>
+              ))}
+            </ol>
           </div>
-          <p className="mt-14 rounded-2xl bg-apricot/50 px-6 py-5 text-graphite">
-            <span className="font-display font-semibold">First client:</span> BRACAI, an AI tool
-            for Amazon sellers.
+        </section>
+
+        {/* First client */}
+        <section className="mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44">
+          <p className="reveal rounded-[2rem] bg-royal px-8 py-16 font-display text-[clamp(1.75rem,3.6vw,3.25rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-offwhite md:px-16 md:py-24">
+            Our first client is BRACAI, an AI tool for Amazon sellers.
           </p>
         </section>
 
         {/* Contact */}
-        <section id="contact" className="bg-graphite text-offwhite">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-24">
+        <section id="contact" className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6">
+          <div className="grid gap-12 rounded-[2rem] bg-graphite px-8 py-14 text-offwhite md:grid-cols-2 md:gap-16 md:px-16 md:py-24">
             <div>
-              <Eyebrow dark>Contact us</Eyebrow>
-              <h2 className="mt-5 font-display text-3xl font-bold leading-tight sm:text-4xl">
-                Ready to grow chamber by chamber?
+              <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                Tell us about your store.
               </h2>
-              <p className="mt-5 text-lg text-offwhite/70">
-                Tell us about your store. We will reply with the first steps to turn more of
-                your visitors into buyers.
+              <p className="mt-5 max-w-md text-lg leading-relaxed text-offwhite/80">
+                Say what you sell and what you want to improve. We reply by email.
               </p>
-              <p className="mt-8 text-offwhite/70">
-                Or write to{" "}
-                <a href="mailto:nautilostd@gmail.com" className="text-cyan underline-offset-4 hover:underline">
+              <p className="mt-8 text-offwhite/80">
+                Prefer your own inbox? Write to{" "}
+                <a
+                  href="mailto:nautilostd@gmail.com"
+                  className="text-cyan underline underline-offset-4"
+                >
                   nautilostd@gmail.com
                 </a>
               </p>
@@ -197,11 +240,14 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-graphite text-offwhite/60">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 border-t border-white/10 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>© 2026 Nautilo Studio · Analyse. Optimise. Automate.</p>
-          <p>A student project at TBS Education Barcelona</p>
-        </div>
+      <footer className="mx-auto mt-10 flex w-full max-w-7xl flex-col gap-2 px-4 pb-10 text-sm text-slate sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p>© 2026 Nautilo Studio. Analyse. Optimise. Automate.</p>
+        <p>
+          A student project at TBS Education Barcelona.{" "}
+          <Link href="/privacy" className="underline underline-offset-4 hover:text-royal">
+            Privacy note
+          </Link>
+        </p>
       </footer>
     </>
   );
