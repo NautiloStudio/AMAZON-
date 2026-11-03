@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import ListingCompare from "@/components/ListingCompare";
+import Nautilus from "@/components/Nautilus";
 import TalkButton from "@/components/TalkButton";
 
 const services = [
@@ -118,15 +119,7 @@ export default function Home() {
             className="rise relative mx-auto mt-16 max-w-5xl text-left md:mt-20"
             style={{ "--i": 3 } as React.CSSProperties}
           >
-            <Image
-              src="/img/nautilus.webp"
-              alt=""
-              width={1024}
-              height={1024}
-              priority
-              sizes="(min-width: 768px) 220px, 120px"
-              className="pointer-events-none absolute -right-2 -top-12 z-10 w-24 rotate-12 md:-right-20 md:-top-20 md:w-48"
-            />
+            <Nautilus className="pointer-events-none absolute -right-2 -top-12 z-10 w-24 rotate-12 md:-right-20 md:-top-20 md:w-44" />
             <ListingCompare />
           </div>
         </section>
@@ -183,16 +176,17 @@ export default function Home() {
                 A nautilus adds one chamber at a time along the golden spiral. Your store can grow
                 the same way.
               </p>
-              <Image
-                src="/img/nautilus.webp"
-                alt=""
-                width={1024}
-                height={1024}
-                sizes="(min-width: 768px) 420px, 240px"
-                className="grow-shell mx-auto mt-8 w-56 md:mt-10 md:w-[min(26rem,52vh)]"
+              <Nautilus
+                fillOnScroll
+                className="mx-auto mt-10 hidden md:block md:w-[min(24rem,48vh)]"
               />
             </div>
-            <ol className="m-0 list-none space-y-5 p-0 md:pt-[26vh]">
+            <div>
+              {/* Below md the column layout has no sticky side, so a small shell follows the steps instead. */}
+              <div className="pointer-events-none sticky top-24 z-10 flex h-0 justify-end pr-4 md:hidden">
+                <Nautilus fillOnScroll className="h-24 w-24" />
+              </div>
+              <ol className="m-0 list-none space-y-5 p-0 md:pt-[26vh]">
               {steps.map((step) => (
                 <li
                   key={step.word}
@@ -204,7 +198,8 @@ export default function Home() {
                   <p className="mt-3 max-w-md text-lg leading-relaxed text-slate">{step.text}</p>
                 </li>
               ))}
-            </ol>
+              </ol>
+            </div>
           </div>
         </section>
 

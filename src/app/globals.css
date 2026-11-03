@@ -100,20 +100,16 @@ textarea {
       animation-range: entry 70% cover 45%;
     }
 
-    /* The shell turns and grows while the three steps scroll past. */
-    @keyframes grow-shell {
+    /* Each chamber of the shell lights up in turn while the steps scroll past. */
+    @keyframes chamber-fill {
       from {
-        transform: rotate(-70deg) scale(0.72);
-      }
-      to {
-        transform: rotate(20deg) scale(1.05);
+        opacity: 0;
       }
     }
 
-    .grow-shell {
-      animation: grow-shell linear both;
+    .chamber-fill {
+      animation: chamber-fill linear both;
       animation-timeline: --steps;
-      animation-range: cover 10% cover 90%;
     }
 
     .steps-timeline {
