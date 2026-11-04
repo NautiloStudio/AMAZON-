@@ -142,8 +142,8 @@ export default function Home() {
             ))}
           </p>
           <p className="reveal mx-auto mt-10 max-w-xl text-lg leading-relaxed text-slate sm:text-xl">
-            You already sell a good product on Amazon, but you have no marketing or data team.
-            Agencies do it for you. Tools leave sellers on their own.
+            You already sell a good product on Amazon. Agencies do it for you and tools leave you on
+            your own, so we work on it with you.
           </p>
         </section>
 
