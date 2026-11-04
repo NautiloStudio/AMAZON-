@@ -55,7 +55,8 @@ const steps = [
   },
 ];
 
-const statement = "Too small for the big agencies. Too busy to fix every listing alone.";
+const statement =
+  "Running an Amazon store takes enough time. Improving every listing shouldn’t be on you alone.";
 
 export default function Home() {
   return (
@@ -100,7 +101,8 @@ export default function Home() {
             className="rise mx-auto mt-7 max-w-xl text-lg leading-relaxed text-slate sm:text-xl"
             style={{ "--i": 1 } as React.CSSProperties}
           >
-            We help founder-led Amazon sellers turn more visitors into buyers, using data and AI.
+            We help founder-led Amazon sellers understand their performance, improve their listings and
+            reduce repetitive work.
           </p>
           <div
             className="rise mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-4"
@@ -114,6 +116,12 @@ export default function Home() {
               See our services
             </a>
           </div>
+          <p
+            className="rise mt-5 text-slate"
+            style={{ "--i": 3 } as React.CSSProperties}
+          >
+            Not sure what you need? Just describe the problem.
+          </p>
 
           <div
             className="rise relative mx-auto mt-16 max-w-5xl text-left md:mt-20"
