@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import CaseStudy from "@/components/CaseStudy";
 import ContactForm from "@/components/ContactForm";
 import ListingCompare from "@/components/ListingCompare";
 import Nautilus from "@/components/Nautilus";
@@ -232,15 +233,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* First client */}
-        <section className="mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44">
-          <p className="reveal rounded-[2rem] bg-royal px-8 py-16 font-display text-[clamp(1.75rem,3.6vw,3.25rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-offwhite md:px-16 md:py-24">
-            Our first client is BRACAI, an AI tool for Amazon sellers.
-          </p>
-        </section>
+        {/* Case study */}
+        <CaseStudy />
 
         {/* Free listing review */}
-        <section id="review" className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6">
+        <section id="review" className="on-dark mx-auto mt-28 max-w-7xl md:mt-44 px-4 sm:px-6">
           <div className="grid gap-12 rounded-[2rem] bg-graphite px-8 py-14 text-offwhite md:grid-cols-2 md:gap-16 md:px-16 md:py-24">
             <div>
               <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
