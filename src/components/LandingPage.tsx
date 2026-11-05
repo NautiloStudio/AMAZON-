@@ -78,7 +78,7 @@ export default function LandingPage({ page }: { page: LandingContent }) {
         }}
       />
 
-      <SiteHeader />
+      <SiteHeader guide={page.slug} />
 
       <main id="main" className="flex-1 overflow-x-clip">
         <article>
