@@ -27,6 +27,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      // Keeps smooth scrolling for in-page links but lets Next.js jump to the top of a new page.
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
