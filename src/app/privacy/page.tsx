@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy note | Nautilo Studio",
-  description: "What Nautilo Studio does with the details you send through the contact form.",
+  description: "What Nautilo Studio does with the details you send through our forms.",
 };
 
 export default function PrivacyPage() {
@@ -19,8 +19,8 @@ export default function PrivacyPage() {
           Maria Giraldo, Veronika Matkovska and Filippo Verace.
         </p>
         <p>
-          When you use our contact form we collect your name, your email address and your message.
-          We use them only to reply to you.
+          When you use one of our forms we collect your name, your email address and your message or
+          listing link. We use them only to reply to you.
         </p>
         <p>
           Your message is stored in our Supabase database, hosted in the European Union. This site

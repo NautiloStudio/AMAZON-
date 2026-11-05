@@ -7,32 +7,36 @@ import TalkButton from "@/components/TalkButton";
 
 const services = [
   {
-    title: "Data analysis",
-    text: "Sales, traffic and conversion data turned into clear next steps.",
-    image: "/img/service-data.jpg",
-    alt: "Cardboard parcels stacked in rising columns like a bar chart",
-    tile: "bg-royal",
+    title: "Ads & SEO",
+    problem: "“Shoppers can’t find my product.”",
+    text: "We improve your keyword ranking and run Sponsored Products campaigns, so more shoppers reach your listings.",
+    image: "/img/service-ads.jpg",
+    alt: "Magnifying glass leaning against a small parcel",
+    tile: "bg-cyan",
     span: "md:col-span-7",
   },
   {
     title: "Listing optimisation",
-    text: "Titles, bullets, A+ content and images that convert.",
+    problem: "“People look, but they don’t buy.”",
+    text: "We rework your titles, bullets, A+ content and images, so more visitors choose to buy.",
     image: "/img/service-listing.jpg",
     alt: "Bamboo cutting board with a blank paper tag",
     tile: "bg-apricot",
     span: "md:col-span-5",
   },
   {
-    title: "Ads & SEO",
-    text: "Keyword ranking and Sponsored Products campaigns.",
-    image: "/img/service-ads.jpg",
-    alt: "Magnifying glass leaning against a small parcel",
-    tile: "bg-cyan",
+    title: "Data analysis",
+    problem: "“I don’t know which numbers matter.”",
+    text: "We turn your sales, traffic and conversion data into clear next steps.",
+    image: "/img/service-data.jpg",
+    alt: "Cardboard parcels stacked in rising columns like a bar chart",
+    tile: "bg-royal",
     span: "md:col-span-5",
   },
   {
     title: "AI automation",
-    text: "AI agents that handle repetitive listing and reporting tasks.",
+    problem: "“Repetitive work eats my week.”",
+    text: "We set up AI agents to handle repetitive listing and reporting tasks.",
     image: "/img/service-ai.jpg",
     alt: "White robotic arm placing a parcel at the end of a neat row",
     tile: "bg-graphite",
@@ -53,6 +57,12 @@ const steps = [
     word: "Automate.",
     text: "AI agents take over the repetitive listing and reporting tasks.",
   },
+];
+
+const reviewSteps = [
+  "You send us a link to one Amazon listing.",
+  "We review its title, bullets, A+ content and images.",
+  "We email you what we’d improve first.",
 ];
 
 const statement =
@@ -83,7 +93,7 @@ export default function Home() {
             <a href="#how" className="hidden py-3 transition-colors hover:text-cyan sm:inline">
               How we work
             </a>
-            <TalkButton tone="cyan" size="sm" />
+            <TalkButton href="#review" label="Free listing review" tone="cyan" size="sm" />
           </div>
         </nav>
       </header>
@@ -95,20 +105,19 @@ export default function Home() {
             className="rise mx-auto max-w-6xl font-display text-[clamp(2.6rem,6.4vw,6rem)] font-bold leading-[1.02] tracking-[-0.04em]"
             style={{ "--i": 0 } as React.CSSProperties}
           >
-            More Amazon sales from the traffic you already have.
+            The marketing team your Amazon store doesn’t have.
           </h1>
           <p
             className="rise mx-auto mt-7 max-w-xl text-lg leading-relaxed text-slate sm:text-xl"
             style={{ "--i": 1 } as React.CSSProperties}
           >
-            We help founder-led Amazon sellers understand their performance, improve their listings and
-            reduce repetitive work.
+            Data and AI to help US Amazon sellers grow and convert more.
           </p>
           <div
             className="rise mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-4"
             style={{ "--i": 2 } as React.CSSProperties}
           >
-            <TalkButton />
+            <TalkButton href="#review" label="Get a free listing review" />
             <a
               href="#services"
               className="font-display font-semibold text-graphite underline decoration-sand decoration-2 underline-offset-8 py-3 transition-colors hover:decoration-royal"
@@ -120,7 +129,14 @@ export default function Home() {
             className="rise mt-5 text-slate"
             style={{ "--i": 3 } as React.CSSProperties}
           >
-            Not sure what you need? Just describe the problem.
+            Not sure what you need?{" "}
+            <a
+              href="#contact"
+              className="font-medium text-graphite underline underline-offset-4 transition-colors hover:text-royal"
+            >
+              Talk to us
+            </a>
+            .
           </p>
 
           <div
@@ -150,7 +166,7 @@ export default function Home() {
         {/* Services */}
         <section id="services" className="mx-auto max-w-7xl px-4 sm:px-6">
           <h2 className="reveal max-w-3xl font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-            Four ways we turn visitors into buyers
+            Which of these sounds like your store?
           </h2>
           <div className="mt-12 grid gap-x-5 gap-y-10 md:grid-cols-12 md:gap-y-14">
             {services.map((service) => (
@@ -166,8 +182,13 @@ export default function Home() {
                     className="object-cover transition-transform duration-700 ease-(--ease-out-strong) [@media(hover:hover)]:hover:scale-[1.03]"
                   />
                 </div>
-                <h3 className="mt-5 font-display text-xl font-semibold">{service.title}</h3>
-                <p className="mt-1 max-w-md text-lg leading-relaxed text-slate">{service.text}</p>
+                <h3 className="mt-5 font-display text-2xl font-semibold tracking-[-0.01em]">
+                  {service.problem}
+                </h3>
+                <p className="mt-2 max-w-md text-lg leading-relaxed text-slate">
+                  <strong className="font-semibold text-graphite">{service.title}.</strong>{" "}
+                  {service.text}
+                </p>
               </article>
             ))}
           </div>
@@ -218,12 +239,34 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Contact */}
-        <section id="contact" className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6">
+        {/* Free listing review */}
+        <section id="review" className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6">
           <div className="grid gap-12 rounded-[2rem] bg-graphite px-8 py-14 text-offwhite md:grid-cols-2 md:gap-16 md:px-16 md:py-24">
             <div>
               <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-                Tell us about your store.
+                Get a free listing review.
+              </h2>
+              <ol className="m-0 mt-8 list-none space-y-4 p-0">
+                {reviewSteps.map((step, index) => (
+                  <li key={step} className="flex gap-4 text-lg leading-relaxed text-offwhite/85">
+                    <span className="w-4 shrink-0 font-display font-semibold text-cyan" aria-hidden>
+                      {index + 1}
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <ContactForm variant="review" />
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6">
+          <div className="grid gap-12 rounded-[2rem] bg-royal px-8 py-14 text-offwhite md:grid-cols-2 md:gap-16 md:px-16 md:py-24">
+            <div>
+              <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                Prefer to talk? Tell us about your store.
               </h2>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-offwhite/80">
                 Say what you sell and what you want to improve. We reply by email.
