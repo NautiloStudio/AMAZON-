@@ -27,6 +27,7 @@ const services = [
     alt: "Bamboo cutting board with a blank paper tag",
     tile: "bg-apricot",
     span: "md:col-span-5",
+    guide: { href: "/listing-optimization", label: "Read our listing optimisation guide" },
   },
   {
     title: "Data analysis",
@@ -36,6 +37,7 @@ const services = [
     alt: "Cardboard parcels stacked in rising columns like a bar chart",
     tile: "bg-royal",
     span: "md:col-span-5",
+    guide: { href: "/data-analysis", label: "Read our data analysis guide" },
   },
   {
     title: "AI automation",
