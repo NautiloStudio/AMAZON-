@@ -36,19 +36,18 @@ export default function ContactForm({ variant = "talk" }: { variant?: Variant })
     const data = new FormData(form);
     setStatus("sending");
 
-    // Review requests share the leads table, so the listing link travels in the message.
-    const message =
-      variant === "review"
-        ? `Free listing review request\nListing: ${String(data.get("listing") ?? "").trim()}`
-        : String(data.get("message") ?? "").trim();
+    // Both forms write to the leads table; `source` tells them apart.
+    const isReview = variant === "review";
 
     try {
       const { error } = await getSupabase()
         .from("leads")
         .insert({
+          source: variant,
           name: String(data.get("name") ?? "").trim(),
           email: String(data.get("email") ?? "").trim(),
-          message,
+          message: isReview ? null : String(data.get("message") ?? "").trim(),
+          listing_url: isReview ? String(data.get("listing") ?? "").trim() : null,
         });
       if (error) throw error;
       form.reset();
