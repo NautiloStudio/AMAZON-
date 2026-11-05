@@ -1,9 +1,11 @@
 import Image from "next/image";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import CaseStudy from "@/components/CaseStudy";
 import ContactForm from "@/components/ContactForm";
 import ListingCompare from "@/components/ListingCompare";
 import Nautilus from "@/components/Nautilus";
+import SiteHeader from "@/components/SiteHeader";
 import TalkButton from "@/components/TalkButton";
 
 const services = [
@@ -15,6 +17,7 @@ const services = [
     alt: "Magnifying glass leaning against a small parcel",
     tile: "bg-cyan",
     span: "md:col-span-7",
+    guide: { href: "/amazon-seo", label: "Read our Amazon SEO guide" },
   },
   {
     title: "Listing optimisation",
@@ -72,32 +75,7 @@ const statement =
 export default function Home() {
   return (
     <>
-      <header className="on-dark fixed inset-x-0 top-4 z-20 flex justify-center px-4">
-        <nav
-          aria-label="Main"
-          className="flex w-full max-w-3xl items-center justify-between rounded-full bg-graphite/95 py-2 pl-5 pr-2 shadow-[0_12px_40px_-12px_rgba(22,25,31,0.5)] ring-1 ring-white/10 backdrop-blur-md"
-        >
-          <a href="#main" aria-label="Nautilo Studio, back to top">
-            <Image
-              src="/nautilo-wordmark-light.png"
-              alt="Nautilo Studio"
-              width={668}
-              height={270}
-              priority
-              className="h-9 w-auto"
-            />
-          </a>
-          <div className="flex items-center gap-6 text-sm text-offwhite/85">
-            <a href="#services" className="hidden py-3 transition-colors hover:text-cyan sm:inline">
-              Services
-            </a>
-            <a href="#how" className="hidden py-3 transition-colors hover:text-cyan sm:inline">
-              How we work
-            </a>
-            <TalkButton href="#review" label="Free listing review" tone="cyan" size="sm" />
-          </div>
-        </nav>
-      </header>
+      <SiteHeader onHome />
 
       <main id="main" className="flex-1 overflow-x-clip">
         {/* Hero */}
@@ -190,6 +168,17 @@ export default function Home() {
                   <strong className="font-semibold text-graphite">{service.title}.</strong>{" "}
                   {service.text}
                 </p>
+                {"guide" in service && service.guide && (
+                  <Link
+                    href={service.guide.href}
+                    className="group mt-5 inline-flex items-center gap-3 rounded-full bg-royal py-2 pl-5 pr-2 font-display font-semibold text-offwhite transition-transform duration-150 ease-out active:scale-[0.97]"
+                  >
+                    {service.guide.label}
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-out-strong) group-hover:-translate-y-px group-hover:translate-x-0.5">
+                      <ArrowUpRight size={16} weight="bold" aria-hidden />
+                    </span>
+                  </Link>
+                )}
               </article>
             ))}
           </div>
