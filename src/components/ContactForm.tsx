@@ -5,13 +5,30 @@ import Link from "next/link";
 import { getSupabase } from "@/lib/supabase";
 
 type Status = "idle" | "sending" | "sent" | "error";
+type Variant = "talk" | "review";
 
 const subscribeNever = () => () => {};
 
-export default function ContactForm() {
+const copy = {
+  talk: {
+    button: "Send message",
+    sentTitle: "Thanks, we have your message.",
+    sentText: "We will reply to the email address you gave us.",
+    error: "We could not send your message.",
+  },
+  review: {
+    button: "Get my free review",
+    sentTitle: "Thanks, we have your listing.",
+    sentText: "We will email our review to the address you gave us.",
+    error: "We could not send your listing.",
+  },
+};
+
+export default function ContactForm({ variant = "talk" }: { variant?: Variant }) {
   const [status, setStatus] = useState<Status>("idle");
   // False until React has hydrated, so the form can never submit natively.
   const ready = useSyncExternalStore(subscribeNever, () => true, () => false);
+  const text = copy[variant];
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -19,13 +36,19 @@ export default function ContactForm() {
     const data = new FormData(form);
     setStatus("sending");
 
+    // Review requests share the leads table, so the listing link travels in the message.
+    const message =
+      variant === "review"
+        ? `Free listing review request\nListing: ${String(data.get("listing") ?? "").trim()}`
+        : String(data.get("message") ?? "").trim();
+
     try {
       const { error } = await getSupabase()
         .from("leads")
         .insert({
           name: String(data.get("name") ?? "").trim(),
           email: String(data.get("email") ?? "").trim(),
-          message: String(data.get("message") ?? "").trim(),
+          message,
         });
       if (error) throw error;
       form.reset();
@@ -39,8 +62,8 @@ export default function ContactForm() {
   if (status === "sent") {
     return (
       <div role="status" className="self-center rounded-2xl bg-white/5 p-8">
-        <p className="font-display text-2xl font-semibold text-cyan">Thanks, we have your message.</p>
-        <p className="mt-3 text-offwhite/80">We will reply to the email address you gave us.</p>
+        <p className="font-display text-2xl font-semibold text-cyan">{text.sentTitle}</p>
+        <p className="mt-3 text-offwhite/80">{text.sentText}</p>
       </div>
     );
   }
@@ -52,17 +75,17 @@ export default function ContactForm() {
   return (
     <form method="post" onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className={label}>
+        <label htmlFor={`${variant}-name`} className={label}>
           Name
         </label>
-        <input id="name" name="name" required autoComplete="name" className={field} />
+        <input id={`${variant}-name`} name="name" required autoComplete="name" className={field} />
       </div>
       <div>
-        <label htmlFor="email" className={label}>
+        <label htmlFor={`${variant}-email`} className={label}>
           Email
         </label>
         <input
-          id="email"
+          id={`${variant}-email`}
           name="email"
           type="email"
           required
@@ -70,29 +93,45 @@ export default function ContactForm() {
           className={field}
         />
       </div>
-      <div>
-        <label htmlFor="message" className={label}>
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={4}
-          placeholder="What do you sell, and what do you want to improve?"
-          className={field}
-        />
-      </div>
+      {variant === "review" ? (
+        <div>
+          <label htmlFor="review-listing" className={label}>
+            Amazon listing link
+          </label>
+          <input
+            id="review-listing"
+            name="listing"
+            type="url"
+            required
+            placeholder="https://www.amazon.com/dp/..."
+            className={field}
+          />
+        </div>
+      ) : (
+        <div>
+          <label htmlFor="talk-message" className={label}>
+            Message
+          </label>
+          <textarea
+            id="talk-message"
+            name="message"
+            required
+            rows={4}
+            placeholder="What do you sell, and what do you want to improve?"
+            className={field}
+          />
+        </div>
+      )}
       <button
         type="submit"
         disabled={!ready || status === "sending"}
         className="w-full rounded-full bg-cyan px-6 py-4 font-display font-semibold text-graphite transition-transform duration-150 ease-out active:scale-[0.98] disabled:opacity-70"
       >
-        {status === "sending" ? "Sending..." : "Send message"}
+        {status === "sending" ? "Sending..." : text.button}
       </button>
       {status === "error" && (
         <p role="alert" className="text-sm text-apricot">
-          We could not send your message. Try again, or email us at nautilostd@gmail.com.
+          {text.error} Try again, or email us at nautilostd@gmail.com.
         </p>
       )}
       <p className="text-sm text-offwhite/75">

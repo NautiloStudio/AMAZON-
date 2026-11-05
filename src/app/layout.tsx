@@ -13,9 +13,9 @@ const poppins = Poppins({
   weight: ["500", "600", "700"],
 });
 
-const title = "Amazon Conversion Agency for Sellers | Nautilo Studio";
+const title = "Amazon Marketing Agency for US Sellers | Nautilo Studio";
 const description =
-  "We help founder-led Amazon sellers turn more visitors into buyers with data analysis, listing optimisation, ads and AI automation. Talk to Nautilo Studio.";
+  "The marketing team your Amazon store doesn’t have. Data and AI to help US Amazon sellers grow and convert more. Get a free listing review.";
 
 export const metadata: Metadata = {
   title,
