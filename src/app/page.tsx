@@ -41,6 +41,7 @@ const services = [
     title: "AI automation",
     problem: "“Repetitive work eats my week.”",
     text: "We set up AI agents to handle repetitive listing and reporting tasks.",
+    guide: { href: "/ai-automation", label: "Read our AI automation guide" },
     image: "/img/service-ai.jpg",
     alt: "White robotic arm placing a parcel at the end of a neat row",
     tile: "bg-graphite",
@@ -254,6 +255,9 @@ export default function Home() {
               <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
                 Prefer to talk? Tell us about your store.
               </h2>
+              <p className="mt-5 font-display text-xl font-semibold text-cyan md:text-2xl">
+                Book a free 30-minute consultancy session.
+              </p>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-offwhite/80">
                 Say what you sell and what you want to improve. We reply by email.
               </p>

@@ -31,9 +31,12 @@ const page: LandingContent = {
   answer:
     "Amazon shows the products that best match a shopper’s search and that shoppers are most likely to buy. To rank higher, put the words shoppers actually type into your title, bullet points and backend search terms, then make the listing convincing enough that visitors buy. The sales that follow, together with good listing quality and account health, move the product further up over time.",
   description,
-  author: { name: "Filippo Verace", role: "Nautilo Studio" },
+  image: {
+    src: "/img/service-ads.jpg",
+    alt: "Magnifying glass leaning against a small parcel",
+    tile: "bg-cyan",
+  },
   updated: "2026-11-05",
-  readMinutes: 6,
   sections: [
     {
       id: "what-is-amazon-seo",
@@ -250,24 +253,6 @@ const page: LandingContent = {
       question: "Can Nautilo Studio check my listing?",
       answer:
         "Yes. Send us a link to one Amazon listing through the free review form on this page and we’ll email you what we would improve first.",
-    },
-  ],
-  sources: [
-    {
-      publisher: "Amazon (Sell on Amazon blog)",
-      title: "Amazon SEO: 7 ways to improve your product’s search rankings",
-      url: AMAZON_SEO_GUIDE,
-      date: "September 3, 2025",
-    },
-    {
-      publisher: "Amazon Seller Central",
-      title: "Product title requirements and guidelines",
-      url: TITLE_RULES,
-    },
-    {
-      publisher: "Amazon Seller Central",
-      title: "Use search terms effectively",
-      url: SEARCH_TERMS_HELP,
     },
   ],
 };
