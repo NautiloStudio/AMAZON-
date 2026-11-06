@@ -3,9 +3,12 @@ import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import CaseStudy from "@/components/CaseStudy";
 import ContactForm from "@/components/ContactForm";
+import GuideGallery from "@/components/GuideGallery";
 import ListingCompare from "@/components/ListingCompare";
 import Nautilus from "@/components/Nautilus";
+import SellerMarquee from "@/components/SellerMarquee";
 import SiteHeader from "@/components/SiteHeader";
+import StepDemo from "@/components/StepDemo";
 import TalkButton from "@/components/TalkButton";
 
 const services = [
@@ -27,7 +30,10 @@ const services = [
     alt: "Bamboo cutting board with a blank paper tag",
     tile: "bg-apricot",
     span: "md:col-span-5",
-    guide: { href: "/listing-optimization", label: "Read our listing optimisation guide" },
+    guide: {
+      href: "/listing-optimization",
+      label: "Read our listing optimisation guide",
+    },
   },
   {
     title: "Data analysis",
@@ -54,14 +60,17 @@ const services = [
 const steps = [
   {
     word: "Analyse.",
+    demo: "analyse" as const,
     text: "We read your sales, traffic and conversion data and turn it into clear next steps.",
   },
   {
     word: "Optimise.",
+    demo: "optimise" as const,
     text: "We work on titles, bullets, A+ content and images, then on keywords and Sponsored Products campaigns.",
   },
   {
     word: "Automate.",
+    demo: "automate" as const,
     text: "AI agents take over the repetitive listing and reporting tasks.",
   },
 ];
@@ -130,6 +139,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Who we're built for */}
+        <SellerMarquee />
+
         {/* Statement */}
         <section className="mx-auto max-w-6xl px-4 py-28 text-center sm:px-6 md:py-44">
           <p className="font-display text-[clamp(2.2rem,5.6vw,5.25rem)] font-bold leading-[1.06] tracking-[-0.035em]">
@@ -140,8 +152,8 @@ export default function Home() {
             ))}
           </p>
           <p className="reveal mx-auto mt-10 max-w-xl text-lg leading-relaxed text-slate sm:text-xl">
-            You already sell a good product on Amazon. Agencies do it for you and tools leave you on
-            your own, so we work on it with you.
+            You already sell a good product on Amazon. Agencies do it for you
+            and tools leave you on your own, so we work on it with you.
           </p>
         </section>
 
@@ -150,53 +162,71 @@ export default function Home() {
           <h2 className="reveal max-w-3xl font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
             Which of these sounds like your store?
           </h2>
-          <div className="mt-12 grid gap-x-5 gap-y-10 md:grid-cols-12 md:gap-y-14">
-            {services.map((service) => (
-              <article key={service.title} className={`reveal ${service.span}`}>
-                <div
-                  className={`relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-auto md:h-[28rem] ${service.tile}`}
-                >
-                  <Image
-                    src={service.image}
-                    alt={service.alt}
-                    fill
-                    sizes="(min-width: 768px) 60vw, 100vw"
-                    className="object-cover transition-transform duration-700 ease-(--ease-out-strong) [@media(hover:hover)]:hover:scale-[1.03]"
-                  />
-                </div>
-                <h3 className="mt-5 font-display text-2xl font-semibold tracking-[-0.01em]">
-                  {service.problem}
-                </h3>
-                <p className="mt-2 max-w-md text-lg leading-relaxed text-slate">
-                  <strong className="font-semibold text-graphite">{service.title}.</strong>{" "}
-                  {service.text}
-                </p>
-                {"guide" in service && service.guide && (
-                  <Link
-                    href={service.guide.href}
-                    className="group mt-5 inline-flex items-center gap-3 rounded-full bg-royal py-2 pl-5 pr-2 font-display font-semibold text-offwhite transition-transform duration-150 ease-out active:scale-[0.97]"
+          {/* Cards stack on top of each other as you scroll, each leaving its label visible. */}
+          <ol className="m-0 mt-12 list-none space-y-6 p-0">
+            {services.map((service, index) => (
+              <li
+                key={service.title}
+                className="sticky"
+                style={
+                  {
+                    top: `calc(6.5rem + ${index} * var(--stack-step))`,
+                  } as React.CSSProperties
+                }
+              >
+                <article className="grid gap-6 rounded-[2rem] bg-white p-5 shadow-[0_-18px_50px_-28px_rgba(22,25,31,0.35)] ring-1 ring-sand sm:p-6 md:h-[30rem] md:grid-cols-2 md:gap-10 md:p-8">
+                  <div className="flex flex-col">
+                    <p className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-slate">
+                      {service.title}
+                    </p>
+                    <div className="mt-6 md:mt-auto">
+                      <h3 className="font-display text-[clamp(1.6rem,3vw,2.5rem)] font-bold leading-[1.1] tracking-[-0.02em]">
+                        {service.problem}
+                      </h3>
+                      <p className="mt-3 max-w-md text-lg leading-relaxed text-slate">
+                        {service.text}
+                      </p>
+                      <Link
+                        href={service.guide.href}
+                        className="group mt-6 inline-flex items-center gap-3 rounded-full bg-royal py-2 pl-5 pr-2 font-display font-semibold text-offwhite transition-transform duration-150 ease-out active:scale-[0.97]"
+                      >
+                        {service.guide.label}
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-out-strong) group-hover:-translate-y-px group-hover:translate-x-0.5">
+                          <ArrowUpRight size={16} weight="bold" aria-hidden />
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                  <div
+                    className={`relative aspect-[16/10] overflow-hidden rounded-[1.5rem] md:aspect-auto ${service.tile}`}
                   >
-                    {service.guide.label}
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 ease-(--ease-out-strong) group-hover:-translate-y-px group-hover:translate-x-0.5">
-                      <ArrowUpRight size={16} weight="bold" aria-hidden />
-                    </span>
-                  </Link>
-                )}
-              </article>
+                    <Image
+                      src={service.image}
+                      alt={service.alt}
+                      fill
+                      sizes="(min-width: 768px) 45vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </article>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
         {/* How we work */}
-        <section id="how" className="steps-timeline mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44">
+        <section
+          id="how"
+          className="steps-timeline mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44"
+        >
           <div className="grid items-start gap-10 md:grid-cols-2 md:gap-16">
             <div className="md:sticky md:top-28">
               <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
                 Grow chamber by chamber.
               </h2>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-slate">
-                A nautilus adds one chamber at a time along the golden spiral. Your store can grow
-                the same way.
+                A nautilus adds one chamber at a time along the golden spiral.
+                Your store can grow the same way.
               </p>
               <Nautilus
                 fillOnScroll
@@ -208,18 +238,22 @@ export default function Home() {
               <div className="pointer-events-none sticky top-24 z-10 flex h-0 justify-end pr-4 md:hidden">
                 <Nautilus fillOnScroll className="h-24 w-24" />
               </div>
-              <ol className="m-0 list-none space-y-5 p-0 md:pt-[26vh]">
-              {steps.map((step) => (
-                <li
-                  key={step.word}
-                  className="reveal flex min-h-[46vh] flex-col justify-end rounded-[2rem] bg-white p-8 md:p-10"
-                >
-                  <p className="font-display text-[clamp(2.4rem,5vw,4.5rem)] font-bold tracking-[-0.03em] text-royal">
-                    {step.word}
-                  </p>
-                  <p className="mt-3 max-w-md text-lg leading-relaxed text-slate">{step.text}</p>
-                </li>
-              ))}
+              <ol className="m-0 list-none space-y-8 p-0 md:pt-[26vh]">
+                {steps.map((step) => (
+                  <li key={step.word} className="glow-card rounded-[2rem]">
+                    <div className="flex min-h-[46vh] flex-col justify-between gap-8 rounded-[2rem] bg-white p-6 md:p-10">
+                      <StepDemo kind={step.demo} />
+                      <div>
+                        <p className="font-display text-[clamp(2.4rem,5vw,4.5rem)] font-bold tracking-[-0.03em] text-royal">
+                          {step.word}
+                        </p>
+                        <p className="mt-3 max-w-md text-lg leading-relaxed text-slate">
+                          {step.text}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                ))}
               </ol>
             </div>
           </div>
@@ -228,8 +262,14 @@ export default function Home() {
         {/* Case study */}
         <CaseStudy />
 
+        {/* Free guides */}
+        <GuideGallery />
+
         {/* Free listing review */}
-        <section id="review" className="on-dark mx-auto mt-28 max-w-7xl md:mt-44 px-4 sm:px-6">
+        <section
+          id="review"
+          className="on-dark mx-auto mt-28 max-w-7xl md:mt-44 px-4 sm:px-6"
+        >
           <div className="grid gap-12 rounded-[2rem] bg-graphite px-8 py-14 text-offwhite md:grid-cols-2 md:gap-16 md:px-16 md:py-24">
             <div>
               <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
@@ -237,8 +277,14 @@ export default function Home() {
               </h2>
               <ol className="m-0 mt-8 list-none space-y-4 p-0">
                 {reviewSteps.map((step, index) => (
-                  <li key={step} className="flex gap-4 text-lg leading-relaxed text-offwhite/85">
-                    <span className="w-4 shrink-0 font-display font-semibold text-cyan" aria-hidden>
+                  <li
+                    key={step}
+                    className="flex gap-4 text-lg leading-relaxed text-offwhite/85"
+                  >
+                    <span
+                      className="w-4 shrink-0 font-display font-semibold text-cyan"
+                      aria-hidden
+                    >
                       {index + 1}
                     </span>
                     <span>{step}</span>
@@ -251,7 +297,10 @@ export default function Home() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6">
+        <section
+          id="contact"
+          className="on-dark mx-auto mt-5 max-w-7xl px-4 sm:px-6"
+        >
           <div className="grid gap-12 rounded-[2rem] bg-royal px-8 py-14 text-offwhite md:grid-cols-2 md:gap-16 md:px-16 md:py-24">
             <div>
               <h2 className="font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
@@ -261,7 +310,8 @@ export default function Home() {
                 Book a free 30-minute consultancy session.
               </p>
               <p className="mt-5 max-w-md text-lg leading-relaxed text-offwhite/80">
-                Say what you sell and what you want to improve. We reply by email.
+                Say what you sell and what you want to improve. We reply by
+                email.
               </p>
               <p className="mt-8 text-offwhite/80">
                 Prefer your own inbox? Write to{" "}
@@ -282,7 +332,10 @@ export default function Home() {
         <p>© 2026 Nautilo Studio. Analyse. Optimise. Automate.</p>
         <p>
           A student project at TBS Education Barcelona.{" "}
-          <Link href="/privacy" className="underline underline-offset-4 hover:text-royal">
+          <Link
+            href="/privacy"
+            className="underline underline-offset-4 hover:text-royal"
+          >
             Privacy note
           </Link>
         </p>
