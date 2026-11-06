@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, CaretDown, List, X } from "@phosphor-icons/react/dist/ssr";
 import TalkButton from "@/components/TalkButton";
 import { landingPages } from "@/lib/landing-pages";
@@ -16,6 +17,7 @@ export default function SiteHeader({ onHome = false, guide }: { onHome?: boolean
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const panelId = useId();
+  const pathname = usePathname();
 
   // Close the list on Escape or on a click outside the bar.
   useEffect(() => {
@@ -82,9 +84,18 @@ export default function SiteHeader({ onHome = false, guide }: { onHome?: boolean
           onGuide ? "max-w-5xl" : "max-w-3xl"
         }`}
       >
+        {/* Always leads to the top of the homepage, even when you are already on it. */}
         <Link
-          href={onHome ? "#main" : "/"}
+          href="/"
           aria-label={onHome ? "Nautilo Studio, back to top" : "Nautilo Studio homepage"}
+          className="relative z-10 shrink-0"
+          onClick={(event) => {
+            setOpen(false);
+            if (pathname !== "/") return;
+            event.preventDefault();
+            window.history.replaceState(null, "", "/");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
         >
           <Image
             src="/nautilo-wordmark-light.png"
