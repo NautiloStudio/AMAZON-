@@ -37,6 +37,12 @@ const page: LandingContent = {
     tile: "bg-cyan",
   },
   updated: "2026-11-06",
+  facts: [
+    { value: 200, suffix: " chars", label: "Title limit in Amazon’s SEO guide" },
+    { value: 60, suffix: " chars", label: "Title length Amazon recommends" },
+    { value: 2, suffix: "×", label: "Most times a word may appear in a title" },
+    { value: 4, label: "Places to find real search terms" },
+  ],
   sections: [
     {
       id: "how-ranking-works",

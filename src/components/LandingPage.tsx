@@ -1,14 +1,17 @@
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, CaretDown, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import ContactForm from "@/components/ContactForm";
+import CountUp from "@/components/CountUp";
+import GuideGallery from "@/components/GuideGallery";
 import SiteHeader from "@/components/SiteHeader";
+import StepDemo, { type DemoKind } from "@/components/StepDemo";
 import TalkButton from "@/components/TalkButton";
-import { SITE_URL, landingPages } from "@/lib/landing-pages";
+import { SITE_URL } from "@/lib/landing-pages";
 
 export type LandingSection = { id: string; heading: string; body: ReactNode };
 export type LandingFaq = { question: string; answer: string };
+export type LandingFact = { value: number; prefix?: string; suffix?: string; label: string };
 
 export type LandingContent = {
   slug: string;
@@ -18,6 +21,7 @@ export type LandingContent = {
   description: string; // same text as the meta description
   image: { src: string; alt: string; tile: string };
   updated: string; // ISO date
+  facts: LandingFact[]; // real numbers from Amazon or the guide itself, never results
   sections: LandingSection[];
   faqs: LandingFaq[];
 };
@@ -63,12 +67,18 @@ function structuredData(page: LandingContent) {
   ];
 }
 
+// The looping scene shown in each guide's hero.
+const scenes: Record<string, DemoKind> = {
+  "amazon-seo": "search",
+  "listing-optimization": "optimise",
+  "data-analysis": "analyse",
+  "ai-automation": "automate",
+};
+
 const h2 =
   "font-display text-[clamp(1.75rem,3.2vw,2.75rem)] font-bold leading-[1.1] tracking-[-0.025em]";
 
 export default function LandingPage({ page }: { page: LandingContent }) {
-  const related = landingPages.filter((link) => link.slug !== page.slug);
-
   return (
     <>
       <script
@@ -128,18 +138,14 @@ export default function LandingPage({ page }: { page: LandingContent }) {
                   </Link>
                 </div>
               </div>
-              <div
-                className={`rise relative aspect-[4/3] overflow-hidden rounded-[2rem] ${page.image.tile}`}
-                style={{ "--i": 2 } as React.CSSProperties}
-              >
-                <Image
-                  src={page.image.src}
-                  alt={page.image.alt}
-                  fill
-                  priority
-                  sizes="(min-width: 768px) 40vw, 100vw"
-                  className="object-cover"
-                />
+              <div className="rise glow-card rounded-[2rem]" style={{ "--i": 2 } as React.CSSProperties}>
+                <div
+                  className={`flex min-h-[20rem] items-center justify-center rounded-[2rem] p-6 md:aspect-[4/3] md:p-10 ${page.image.tile}`}
+                >
+                  <div className="w-full max-w-md">
+                    <StepDemo kind={scenes[page.slug] ?? "optimise"} />
+                  </div>
+                </div>
               </div>
             </div>
             <div
@@ -153,30 +159,44 @@ export default function LandingPage({ page }: { page: LandingContent }) {
                 {page.answer}
               </p>
             </div>
+
+            {/* Numbers that count up: facts from Amazon or this guide, not client results */}
+            <ul className="m-0 mt-5 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4">
+              {page.facts.map((fact) => (
+                <li key={fact.label} className="reveal rounded-[1.5rem] bg-white p-6">
+                  <p className="font-display text-[clamp(2.4rem,4vw,3.5rem)] font-bold leading-none tracking-[-0.03em] text-royal">
+                    <CountUp to={fact.value} prefix={fact.prefix} suffix={fact.suffix} />
+                  </p>
+                  <p className="mt-3 text-slate">{fact.label}</p>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Sections: the heading stays beside its content on wide screens */}
           <div className="mx-auto mt-20 max-w-7xl space-y-16 px-4 sm:px-6 md:mt-28 md:space-y-24">
-            <div className="space-y-16 md:space-y-24">
-              {page.sections.map((section) => (
+            <div className="stack-list space-y-16 md:space-y-24">
+              {page.sections.map((section, index) => (
                 <section
                   key={section.id}
                   id={section.id}
-                  className="reveal grid scroll-mt-28 gap-6 border-t border-sand pt-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14"
+                  className="stack-section grid scroll-mt-28 gap-6 border-t border-sand pt-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14"
+                  style={{ "--i": index } as React.CSSProperties}
                 >
-                  <h2 className={`${h2} md:sticky md:top-28 md:self-start`}>{section.heading}</h2>
-                  <div className="space-y-5 text-lg leading-relaxed text-slate [&_a]:text-graphite [&_a]:underline [&_a]:decoration-royal/40 [&_a]:underline-offset-4 [&_a:hover]:text-royal [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-graphite [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-6 [&_strong]:font-semibold [&_strong]:text-graphite [&_ul]:grid [&_ul]:list-none [&_ul]:gap-3 [&_ul]:p-0 md:[&_ul]:grid-cols-2 [&_ul>li]:rounded-[1.5rem] [&_ul>li]:bg-white [&_ul>li]:p-6 [&_ul>li]:text-base md:[&_ul>li:last-child:nth-child(odd)]:col-span-2">
+                  <h2 className={h2}>{section.heading}</h2>
+                  <div className="space-y-5 text-lg leading-relaxed text-slate [&_a]:text-graphite [&_a]:underline [&_a]:decoration-royal/40 [&_a]:underline-offset-4 [&_a:hover]:text-royal [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-graphite [&_li]:pl-1 [&_ol]:list-inside [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:p-0 [&_ol>li]:rounded-[1.5rem] [&_ol>li]:bg-white [&_ol>li]:p-5 [&_ol>li]:text-base [&_strong]:font-semibold [&_strong]:text-graphite [&_ul]:grid [&_ul]:list-none [&_ul]:gap-3 [&_ul]:p-0 md:[&_ul]:grid-cols-2 [&_ul>li]:rounded-[1.5rem] [&_ul>li]:bg-white [&_ul>li]:p-6 [&_ul>li]:text-base md:[&_ul>li:last-child:nth-child(odd)]:col-span-2">
                     {section.body}
                   </div>
                 </section>
               ))}
             </div>
 
-              {/* Full guide as a PDF */}
+              {/* Full guide as a PDF, with the nautilus ring to draw the eye */}
+              <div className="glow-card rounded-[2rem]">
               <a
                 href={`/guides/nautilo-${page.slug}-guide.pdf`}
                 download
-                className="reveal group flex items-center justify-between gap-6 rounded-[2rem] bg-graphite p-6 text-offwhite sm:p-8"
+                className="group flex items-center justify-between gap-6 rounded-[2rem] bg-graphite p-6 text-offwhite sm:p-8"
               >
                 <span>
                   <span className="block font-display text-sm font-semibold uppercase tracking-[0.14em] text-cyan">
@@ -190,6 +210,7 @@ export default function LandingPage({ page }: { page: LandingContent }) {
                   <DownloadSimple size={20} weight="bold" aria-hidden />
                 </span>
               </a>
+              </div>
 
               {/* Case study teaser */}
               <Link
@@ -233,19 +254,9 @@ export default function LandingPage({ page }: { page: LandingContent }) {
               {/* Internal links */}
               <section aria-labelledby="related" className="reveal">
                 <h2 id="related" className="font-display text-xl font-semibold">
-                  Keep reading
+                  More from Nautilo Studio
                 </h2>
                 <ul className="mt-4 flex flex-wrap gap-3 p-0">
-                  {related.map((link) => (
-                    <li key={link.slug} className="list-none">
-                      <Link
-                        href={`/${link.slug}`}
-                        className="inline-block rounded-full bg-white px-4 py-2 ring-1 ring-sand transition-colors hover:ring-royal"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
                   <li className="list-none">
                     <Link
                       href="/#services"
@@ -274,6 +285,18 @@ export default function LandingPage({ page }: { page: LandingContent }) {
               </section>
           </div>
         </article>
+
+        {/* The other guides, as an expanding gallery */}
+        <GuideGallery
+          exclude={page.slug}
+          id="more-guides"
+          heading={
+            <>
+              Keep reading: <CountUp to={3} /> more free guides.
+            </>
+          }
+          intro="Each one comes with examples, charts and a checklist you can download."
+        />
 
         {/* Free listing review */}
         <section id="review" className="on-dark mx-auto mt-28 max-w-7xl scroll-mt-24 px-4 sm:px-6 md:mt-36">

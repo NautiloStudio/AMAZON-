@@ -39,6 +39,12 @@ const page: LandingContent = {
     tile: "bg-graphite",
   },
   updated: "2026-11-05",
+  facts: [
+    { value: 4, label: "Tasks AI can take over" },
+    { value: 3, label: "Amazon AI tools to start with" },
+    { value: 0, prefix: "$", label: "Cost of Seller Assistant for US sellers" },
+    { value: 1, label: "Automation to start with" },
+  ],
   sections: [
     {
       id: "what-to-automate",

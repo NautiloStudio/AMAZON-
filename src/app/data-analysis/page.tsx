@@ -37,6 +37,12 @@ const page: LandingContent = {
     tile: "bg-royal",
   },
   updated: "2026-11-05",
+  facts: [
+    { value: 4, label: "Numbers to track for every product" },
+    { value: 50, suffix: "%", label: "ACOS in Amazon’s example: $50 spent, $100 earned" },
+    { value: 1, label: "Day a week for your routine" },
+    { value: 1, label: "Problem to fix each week" },
+  ],
   sections: [
     {
       id: "numbers",
