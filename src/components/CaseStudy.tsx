@@ -74,7 +74,7 @@ export default function CaseStudy() {
         </p>
       </div>
 
-      <div className="mt-12 grid items-start gap-5 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-6">
+      <div className="mt-12 grid items-start gap-5 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-6">
         {/* Before */}
         <article className="reveal flex flex-col rounded-[2rem] bg-white p-6 sm:p-8">
           <div className="flex items-center gap-3">
