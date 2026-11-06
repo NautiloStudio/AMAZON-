@@ -38,6 +38,12 @@ const page: LandingContent = {
     tile: "bg-apricot",
   },
   updated: "2026-11-05",
+  facts: [
+    { value: 9, label: "Photos Amazon lets you upload" },
+    { value: 85, suffix: "%", label: "Of the frame the product should fill" },
+    { value: 5, label: "Bullet points per listing" },
+    { value: 8, prefix: "Up to ", suffix: "%", label: "More sales Amazon reports for basic A+ content" },
+  ],
   sections: [
     {
       id: "what-matters",

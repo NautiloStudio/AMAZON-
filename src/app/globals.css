@@ -178,6 +178,21 @@ textarea {
   animation-play-state: paused;
 }
 
+/* Guide sections stack like cards on screens tall enough to show a whole card. */
+@media (min-width: 768px) and (min-height: 760px) {
+  .stack-section {
+    position: sticky;
+    top: calc(6.5rem + var(--i, 0) * 1.5rem);
+    background: var(--color-offwhite);
+    border-top: 0;
+    border-radius: 2rem;
+    padding: 2.5rem;
+    box-shadow:
+      0 0 0 1px var(--color-sand),
+      0 -18px 50px -30px rgba(22, 25, 31, 0.35);
+  }
+}
+
 /* Guide gallery: panels grow and shrink smoothly. */
 .guide-panel {
   transition:
@@ -291,6 +306,38 @@ textarea {
     transform: scale(1);
   }
 }
+@keyframes demo-up {
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+  50%,
+  92% {
+    transform: translateY(-7.875rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes demo-down {
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+  50%,
+  92% {
+    transform: translateY(2.625rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.demo-up {
+  animation: demo-up 6s var(--ease-out-strong) infinite;
+}
+.demo-down {
+  animation: demo-down 6s var(--ease-out-strong) infinite;
+}
 .demo-draw {
   stroke-dasharray: 100;
   animation: demo-draw 4s var(--ease-out-strong) infinite;
@@ -394,6 +441,8 @@ textarea {
   .demo-l2,
   .demo-l3,
   .demo-approve,
+  .demo-up,
+  .demo-down,
   .glow-card::before,
   .glow-card::after {
     animation: none;

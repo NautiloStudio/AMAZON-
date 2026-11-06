@@ -1,4 +1,4 @@
-import { Check, Sparkle } from "@phosphor-icons/react/dist/ssr";
+import { Check, MagnifyingGlass, Sparkle } from "@phosphor-icons/react/dist/ssr";
 
 // Small looping product scenes for the "How we work" steps. All numbers are examples.
 function Tag() {
@@ -95,7 +95,43 @@ function Automate() {
   );
 }
 
-export default function StepDemo({ kind }: { kind: "analyse" | "optimise" | "automate" }) {
+function Search() {
+  const others = ["Other brand", "Other brand", "Other brand"];
+  return (
+    <div className="relative rounded-[1.5rem] bg-offwhite p-5">
+      <Tag />
+      <p className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm text-slate">
+        <MagnifyingGlass size={16} weight="bold" aria-hidden />
+        insulated water bottle
+      </p>
+      <div className="relative mt-3 h-[10.5rem]">
+        {others.map((label, index) => (
+          <div
+            key={index}
+            className="demo-down absolute inset-x-0 flex h-9 items-center gap-3 rounded-xl bg-white px-3 text-sm text-slate"
+            style={{ top: `${index * 2.625}rem` }}
+          >
+            <span className="h-6 w-6 rounded-md bg-sand" aria-hidden />
+            {label}
+          </div>
+        ))}
+        <div
+          className="demo-up absolute inset-x-0 flex h-9 items-center gap-3 rounded-xl bg-white px-3 text-sm font-semibold ring-2 ring-royal"
+          style={{ top: "7.875rem" }}
+        >
+          <span className="h-6 w-6 rounded-md bg-royal" aria-hidden />
+          <span className="flex-1">Your product</span>
+          <span className="rounded-full bg-royal px-2 py-0.5 text-xs text-offwhite">Top result</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export type DemoKind = "search" | "analyse" | "optimise" | "automate";
+
+export default function StepDemo({ kind }: { kind: DemoKind }) {
+  if (kind === "search") return <Search />;
   if (kind === "analyse") return <Analyse />;
   if (kind === "optimise") return <Optimise />;
   return <Automate />;

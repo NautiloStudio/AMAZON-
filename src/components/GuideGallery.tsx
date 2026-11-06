@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
@@ -42,20 +42,30 @@ const guides = [
 ];
 
 // One guide is open at a time; the others stay as narrow photo strips you can click to open.
-export default function GuideGallery() {
+type Props = { exclude?: string; heading?: ReactNode; intro?: string; id?: string };
+
+export default function GuideGallery({
+  exclude,
+  heading = (
+    <>
+      <CountUp to={4} /> free guides. <CountUp to={40} /> pages of ideas you can use today.
+    </>
+  ),
+  intro = "One guide for each service, with examples, charts and a checklist. Free to read and download.",
+  id = "guides",
+}: Props) {
   const [open, setOpen] = useState(0);
+  const shown = guides.filter((guide) => guide.slug !== exclude);
 
   return (
-    <section id="guides" className="mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44">
+    <section id={id} className="mx-auto mt-28 max-w-7xl px-4 sm:px-6 md:mt-44">
       <h2 className="reveal max-w-4xl font-display text-[clamp(2rem,4.4vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-        <CountUp to={4} /> free guides. <CountUp to={40} /> pages of ideas you can use today.
+        {heading}
       </h2>
-      <p className="reveal mt-5 max-w-xl text-lg leading-relaxed text-slate">
-        One guide for each service, with examples, charts and a checklist. Free to read and download.
-      </p>
+      <p className="reveal mt-5 max-w-xl text-lg leading-relaxed text-slate">{intro}</p>
 
       <ul className="m-0 mt-12 flex list-none flex-col gap-3 p-0 md:h-[32rem] md:flex-row">
-        {guides.map((guide, index) => {
+        {shown.map((guide, index) => {
           const isOpen = index === open;
           return (
             <li
