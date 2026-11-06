@@ -110,6 +110,16 @@ export default function LandingPage({ page }: { page: LandingContent }) {
                   style={{ "--i": 1 } as React.CSSProperties}
                 >
                   <TalkButton href="#review" label="Get a free listing review" />
+                  <a
+                    href={`/guides/nautilo-${page.slug}-guide.pdf`}
+                    download
+                    className="group inline-flex items-center gap-3 rounded-full bg-white py-2 pl-5 pr-2 font-display font-semibold text-graphite ring-2 ring-graphite transition-transform duration-150 ease-out active:scale-[0.97]"
+                  >
+                    Download the free PDF guide
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cyan transition-transform duration-300 ease-(--ease-out-strong) group-hover:translate-y-0.5">
+                      <DownloadSimple size={18} weight="bold" aria-hidden />
+                    </span>
+                  </a>
                   <Link
                     href="/#contact"
                     className="py-3 font-display font-semibold text-graphite underline decoration-sand decoration-2 underline-offset-8 transition-colors hover:decoration-royal"

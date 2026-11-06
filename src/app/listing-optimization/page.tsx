@@ -10,7 +10,7 @@ const BOOST_LISTINGS = "https://sell.amazon.com/blog/how-to-boost-amazon-listing
 
 const title = "Amazon Listing Optimization for US Sellers | Nautilo Studio";
 const description =
-  "How to optimize an Amazon listing so more visitors buy: titles, bullet points, images, A+ content and testing. Get a free listing review.";
+  "How to optimize an Amazon listing so more visitors buy: titles, bullet points, images, A+ content and testing. Free PDF guide and free listing review.";
 
 export const metadata: Metadata = {
   title,
