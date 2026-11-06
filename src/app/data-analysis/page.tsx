@@ -9,7 +9,7 @@ const BOOST_LISTINGS = "https://sell.amazon.com/blog/how-to-boost-amazon-listing
 
 const title = "Amazon Data Analysis: Which Numbers Matter | Nautilo Studio";
 const description =
-  "The Amazon numbers US sellers should track every week, what each one tells you, and where to find it in Seller Central. Get a free listing review.";
+  "The Amazon numbers US sellers should track every week, what each one tells you and where to find it in Seller Central. Get a free listing review today.";
 
 export const metadata: Metadata = {
   title,

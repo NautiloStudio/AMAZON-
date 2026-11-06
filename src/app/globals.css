@@ -19,6 +19,12 @@ html {
   color-scheme: light;
 }
 
+/* No rubber-band or browser pull-to-refresh: the page uses its own nautilus pull to refresh. */
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 body {
   background: var(--color-offwhite);
   color: var(--color-graphite);
@@ -115,5 +121,33 @@ textarea {
     .steps-timeline {
       view-timeline-name: --steps;
     }
+  }
+}
+
+/* Nautilus loader: chambers light up in turn while the shell slowly turns. */
+@keyframes nautilus-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes nautilus-chamber {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  15% {
+    opacity: 1;
+  }
+}
+.nautilus-spin {
+  animation: nautilus-turn 2.4s linear infinite;
+  transform-origin: 50% 50%;
+}
+.nautilus-chamber {
+  animation: nautilus-chamber 1.2s linear infinite both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nautilus-spin {
+    animation: none;
   }
 }
