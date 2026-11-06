@@ -12,7 +12,7 @@ type MenuItem = { href: string; label: string; current?: boolean };
 
 // The top bar on every page.
 // - Guide pages (pass `guide`): Home, the four service guides and the free review button.
-// - Every other page: Services (a list of the guides), How we work and the free review button.
+// - Every other page: Services (a list of the guides), How we work, About us and the free review button.
 export default function SiteHeader({ onHome = false, guide }: { onHome?: boolean; guide?: string }) {
   const [open, setOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
@@ -45,7 +45,13 @@ export default function SiteHeader({ onHome = false, guide }: { onHome?: boolean
   // What the dropdown lists: on guide pages it is the small-screen version of the menu.
   const menuItems: MenuItem[] = onGuide
     ? [{ href: "/", label: "Home" }, ...guides]
-    : [...guides, { href: `${base}#how`, label: "How we work" }];
+    : [
+        ...guides,
+        { href: `${base}#how`, label: "How we work" },
+        { href: "/about", label: "About us", current: pathname === "/about" },
+      ];
+  // Shown in the bar from small screens up, so the list only repeats them on phones.
+  const barLinks = ["How we work", "About us"];
 
   const textLink = "py-3 transition-colors hover:text-cyan";
   const toggle = (
@@ -135,6 +141,15 @@ export default function SiteHeader({ onHome = false, guide }: { onHome?: boolean
               <Link href={`${base}#how`} className={`hidden sm:inline ${textLink}`}>
                 How we work
               </Link>
+              <Link
+                href="/about"
+                aria-current={pathname === "/about" ? "page" : undefined}
+                className={`hidden sm:inline ${textLink} ${
+                  pathname === "/about" ? "text-cyan underline decoration-2 underline-offset-8" : ""
+                }`}
+              >
+                About us
+              </Link>
             </>
           )}
           {/* Every page that uses this bar has its own free review form with id="review". */}
@@ -162,7 +177,7 @@ export default function SiteHeader({ onHome = false, guide }: { onHome?: boolean
                     aria-current={item.current ? "page" : undefined}
                     className={`flex items-center justify-between gap-4 rounded-2xl px-4 py-3 font-display font-semibold transition-colors hover:bg-white/10 ${
                       item.current ? "text-cyan" : "text-offwhite"
-                    } ${item.label === "How we work" ? "sm:hidden" : ""}`}
+                    } ${barLinks.includes(item.label) ? "sm:hidden" : ""}`}
                   >
                     {item.label}
                     <ArrowUpRight size={16} weight="bold" aria-hidden className="text-cyan" />
