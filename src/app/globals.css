@@ -178,8 +178,17 @@ textarea {
   animation-play-state: paused;
 }
 
-/* Guide sections stack like cards on screens tall enough to show a whole card. */
+/* Guide sections stack like cards on screens tall enough to show a whole card.
+   Every card gets the height of the tallest one, so each card fully covers the one before. */
 @media (min-width: 768px) and (min-height: 760px) {
+  .stack-list {
+    display: grid;
+    grid-auto-rows: 1fr;
+    row-gap: 6rem;
+  }
+  .stack-list > * {
+    margin: 0;
+  }
   .stack-section {
     position: sticky;
     top: calc(6.5rem + var(--i, 0) * 1.5rem);

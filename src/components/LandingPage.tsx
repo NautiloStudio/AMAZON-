@@ -175,7 +175,7 @@ export default function LandingPage({ page }: { page: LandingContent }) {
 
           {/* Sections: the heading stays beside its content on wide screens */}
           <div className="mx-auto mt-20 max-w-7xl space-y-16 px-4 sm:px-6 md:mt-28 md:space-y-24">
-            <div className="space-y-16 md:space-y-24">
+            <div className="stack-list space-y-16 md:space-y-24">
               {page.sections.map((section, index) => (
                 <section
                   key={section.id}
@@ -184,7 +184,7 @@ export default function LandingPage({ page }: { page: LandingContent }) {
                   style={{ "--i": index } as React.CSSProperties}
                 >
                   <h2 className={h2}>{section.heading}</h2>
-                  <div className="space-y-5 text-lg leading-relaxed text-slate [&_a]:text-graphite [&_a]:underline [&_a]:decoration-royal/40 [&_a]:underline-offset-4 [&_a:hover]:text-royal [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-graphite [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-6 [&_strong]:font-semibold [&_strong]:text-graphite [&_ul]:grid [&_ul]:list-none [&_ul]:gap-3 [&_ul]:p-0 md:[&_ul]:grid-cols-2 [&_ul>li]:rounded-[1.5rem] [&_ul>li]:bg-white [&_ul>li]:p-6 [&_ul>li]:text-base md:[&_ul>li:last-child:nth-child(odd)]:col-span-2">
+                  <div className="space-y-5 text-lg leading-relaxed text-slate [&_a]:text-graphite [&_a]:underline [&_a]:decoration-royal/40 [&_a]:underline-offset-4 [&_a:hover]:text-royal [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-graphite [&_li]:pl-1 [&_ol]:list-inside [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:p-0 [&_ol>li]:rounded-[1.5rem] [&_ol>li]:bg-white [&_ol>li]:p-5 [&_ol>li]:text-base [&_strong]:font-semibold [&_strong]:text-graphite [&_ul]:grid [&_ul]:list-none [&_ul]:gap-3 [&_ul]:p-0 md:[&_ul]:grid-cols-2 [&_ul>li]:rounded-[1.5rem] [&_ul>li]:bg-white [&_ul>li]:p-6 [&_ul>li]:text-base md:[&_ul>li:last-child:nth-child(odd)]:col-span-2">
                     {section.body}
                   </div>
                 </section>
